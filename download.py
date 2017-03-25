@@ -137,7 +137,17 @@ if __name__ == '__main__':
   prepare_data_dir()
 
   if 'celebA' in args.datasets:
-    download_celeb_a('./data')
+    #download_celeb_a('./data')
+    dirpath = "data/"
+    data_dir = "celebA"
+    filepath = "data/img_align_celeba.zip"
+    zip_dir = ''
+    with zipfile.ZipFile(filepath) as zf:
+      zip_dir = zf.namelist()[0]
+      zf.extractall(dirpath)
+    os.remove(filepath)
+    os.rename(os.path.join(dirpath, zip_dir), os.path.join(dirpath, data_dir))
+
   if 'lsun' in args.datasets:
     download_lsun('./data')
   if 'mnist' in args.datasets:
